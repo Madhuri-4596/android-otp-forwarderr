@@ -1,17 +1,18 @@
-name: Build Android OTP Forwarder APK
+name: Build APK
 
-  on:
-    push:
-      branches: [ main, master ]
-    pull_request:
-      branches: [ main, master ]
+on:
+  push:
+    branches:
+      - main   # or replace with your branch name
 
-  jobs:
-    build:
-      runs-on: ubuntu-latest
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
 
-      steps:
-      - name: Checkout code
+    steps:
+      - name: Checkout repository
         uses: actions/checkout@v4
 
       - name: Set up JDK 17
@@ -20,7 +21,7 @@ name: Build Android OTP Forwarder APK
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Make gradlew executable
+      - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
       - name: Clean project
@@ -29,40 +30,8 @@ name: Build Android OTP Forwarder APK
       - name: Build Release APK
         run: ./gradlew assembleRelease
 
-      - name: Upload APK Artifact
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v3
         with:
           name: android-otp-forwarder-apk
           path: app/build/outputs/apk/release/app-release.apk
-
-      - name: Create Release
-        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
-        uses: softprops/action-gh-release@v1
-        with:
-          tag_name: v${{ github.run_number }}
-          name: Android OTP Forwarder v${{ github.run_number }}
-          body: |
-            ## Android OTP Forwarder - Enhanced Version
-
-            ### New Features:
-            - Persistent Background Service (never gets killed)
-            - Offline Message Queuing (saves OTPs when no internet)
-            - Auto-Retry when connection restored
-            - Smart Subscription Validation
-            - Android 5-14 Compatibility
-            - Battery Optimization Exemption
-
-            ### Installation:
-            1. Download app-release.apk
-            2. Enable "Install from unknown sources"
-            3. Install the APK
-            4. Grant all permissions
-            5. Configure your settings
-            6. Service starts automatically!
-
-            Built with GitHub Actions - Professional build environment.
-          files: app/build/outputs/apk/release/app-release.apk
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
