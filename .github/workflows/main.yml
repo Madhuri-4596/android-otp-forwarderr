@@ -1,6 +1,9 @@
 name: Build Android OTP Forwarder APK
+
   on:
     push:
+      branches: [ main, master ]
+    pull_request:
       branches: [ main, master ]
 
   jobs:
@@ -33,38 +36,31 @@ name: Build Android OTP Forwarder APK
           path: app/build/outputs/apk/release/app-release.apk
 
       - name: Create Release
+        if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
         uses: softprops/action-gh-release@v1
         with:
           tag_name: v${{ github.run_number }}
           name: Android OTP Forwarder v${{ github.run_number }}
           body: |
-            ## 🚀 Android OTP Forwarder - Enhanced Version
+            ## Android OTP Forwarder - Enhanced Version
 
-            ### ✅ New Features:
-            - **Persistent Background Service**: Never gets killed by system
-            - **Offline Message Queuing**: Saves OTPs when no internet connection
-            - **Auto-Retry Mechanism**: Sends queued messages when connection restored
-            - **Smart Subscription Validation**: Only checks when needed
-            - **Android 5-14 Compatibility**: Works on all modern devices
-            - **Battery Optimization**: Requests exemption from power saving
-            - **Modern Architecture**: Updated APIs and dependencies
+            ### New Features:
+            - Persistent Background Service (never gets killed)
+            - Offline Message Queuing (saves OTPs when no internet)
+            - Auto-Retry when connection restored
+            - Smart Subscription Validation
+            - Android 5-14 Compatibility
+            - Battery Optimization Exemption
 
-            ### 📱 Installation Instructions:
-            1. Download **app-release.apk** below
-            2. Enable "Install from unknown sources" on your Android device
-            3. Install the APK file
-            4. Grant ALL permissions when prompted
-            5. Configure your email and mobile numbers
-            6. Service will start automatically!
+            ### Installation:
+            1. Download app-release.apk
+            2. Enable "Install from unknown sources"
+            3. Install the APK
+            4. Grant all permissions
+            5. Configure your settings
+            6. Service starts automatically!
 
-            ### 🔧 Technical Improvements:
-            - Target SDK updated to 34 (latest Android compatibility)
-            - Foreground service implementation
-            - Room database for offline storage
-            - Network connectivity monitoring
-            - Modern permission handling
-
-            **No more app crashes or installation failures!**
+            Built with GitHub Actions - Professional build environment.
           files: app/build/outputs/apk/release/app-release.apk
           draft: false
           prerelease: false
