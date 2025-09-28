@@ -17,13 +17,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      - name: Setup Gradle
-        uses: gradle/gradle-build-action@v2
-        with:
-          gradle-version: 7.5
+      - name: Grant execute permission
+        run: chmod +x gradlew
+
+      - name: Clean project
+        run: ./gradlew clean --no-daemon
 
       - name: Build Release APK
-        run: gradle assembleRelease
+        run: ./gradlew assembleRelease --no-daemon
 
       - name: Upload APK
         uses: actions/upload-artifact@v4
