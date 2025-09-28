@@ -1,37 +1,19 @@
 name: Build APK
-
 on:
   push:
-    branches:
-      - main   # or replace with your branch name
-
 jobs:
   build:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v3
-        with:
-          java-version: '17'
-          distribution: 'temurin'
-
-      - name: Grant execute permission for gradlew
-        run: chmod +x gradlew
-
-      - name: Clean project
-        run: ./gradlew clean
-
-      - name: Build Release APK
-        run: ./gradlew assembleRelease
-
-      - name: Upload APK artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: android-otp-forwarder-apk
-          path: app/build/outputs/apk/release/app-release.apk
+    - uses: actions/checkout@v4
+    - uses: actions/setup-java@v4
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+    - run: chmod +x gradlew
+    - run: ./gradlew clean
+    - run: ./gradlew assembleRelease
+    - uses: actions/upload-artifact@v4
+      with:
+        name: android-otp-forwarder-apk
+        path: app/build/outputs/apk/release/app-release.apk
