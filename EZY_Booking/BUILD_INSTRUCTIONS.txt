@@ -1,0 +1,50 @@
+========================================
+EZY BOOKING - NEW APK BUILD INSTRUCTIONS
+========================================
+
+OPTION 1: Using the Build Script
+---------------------------------
+1. Double-click "build_new_apk.bat" in this folder
+2. Wait for build to complete (2-3 minutes)
+3. Find your APK at: app\build\outputs\apk\release\app-release.apk
+
+OPTION 2: Using Android Studio
+-------------------------------
+1. Open Android Studio
+2. Open this project folder: C:\Users\Dell\EZY_Booking
+3. Wait for Gradle sync to finish
+4. Go to Build → Generate Signed Bundle/APK
+5. Choose APK → Release
+6. Find APK at: app\build\outputs\apk\release\app-release.apk
+
+OPTION 3: Using Command Line
+----------------------------
+1. Open Command Prompt
+2. Run: cd C:\Users\Dell\EZY_Booking
+3. Run: gradlew.bat assembleRelease
+4. Find APK at: app\build\outputs\apk\release\app-release.apk
+
+NEW FEATURES IN THIS APK:
+========================
+✅ Persistent foreground service (no auto-kill)
+✅ Offline message queuing with Room database
+✅ Network monitoring and auto-retry
+✅ Optimized subscription validation
+✅ Android 5-14 compatibility
+✅ Battery optimization exemption
+✅ Proper signed APK for all devices
+
+INSTALLATION:
+=============
+1. Transfer APK to your Android phone
+2. Enable "Install from unknown sources" if needed
+3. Install the APK
+4. Grant all permissions when prompted
+5. The app will show a persistent notification when running
+
+TESTING:
+========
+- App should stay alive in background even after phone restarts
+- When you turn off WiFi/mobile data, OTP messages are queued locally
+- When internet comes back, queued messages are automatically sent
+- Subscription is only validated when app opens or settings change

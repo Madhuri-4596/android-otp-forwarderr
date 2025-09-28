@@ -1,0 +1,76 @@
+name: Build Android APK
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Set up JDK 17
+      uses: actions/setup-java@v3
+      with:
+        java-version: '17'
+        distribution: 'temurin'
+
+    - name: Cache Gradle packages
+      uses: actions/cache@v3
+      with:
+        path: |
+          ~/.gradle/caches
+          ~/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Make gradlew executable
+      run: chmod +x gradlew
+
+    - name: Clean project
+      run: ./gradlew clean
+
+    - name: Build APK
+      run: ./gradlew assembleRelease
+
+    - name: Upload APK
+      uses: actions/upload-artifact@v3
+      with:
+        name: EZY-Booking-APK
+        path: app/build/outputs/apk/release/app-release.apk
+
+    - name: Create Release
+      if: github.ref == 'refs/heads/main' || github.ref == 'refs/heads/master'
+      uses: actions/create-release@v1
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      with:
+        tag_name: v${{ github.run_number }}
+        release_name: EZY Booking v${{ github.run_number }}
+        body: |
+          ## EZY Booking - Improved Version
+
+          ### New Features:
+          - ✅ Persistent foreground service (never gets killed)
+          - ✅ Offline message queuing (saves OTPs when no internet)
+          - ✅ Auto-retry when connection restored
+          - ✅ Optimized subscription validation
+          - ✅ Android 5-14 compatibility
+          - ✅ Battery optimization exemption
+
+          ### Installation:
+          1. Download app-release.apk
+          2. Enable "Install from unknown sources" on your Android phone
+          3. Install the APK
+          4. Grant all permissions when prompted
+          5. Configure your email and mobile numbers
+          6. Service will start automatically!
+
+          Built automatically with GitHub Actions.
+        draft: false
+        prerelease: false

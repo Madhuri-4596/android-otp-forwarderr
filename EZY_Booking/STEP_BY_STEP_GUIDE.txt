@@ -1,0 +1,84 @@
+========================================
+     SUPER EASY STEP-BY-STEP GUIDE
+========================================
+
+STEP 1: Open Android Studio
+---------------------------
+🖱️ Click the Windows Start button (bottom left)
+🔍 Type "Android Studio"
+🖱️ Click on "Android Studio" when it appears
+⏳ Wait for it to open (may take 30 seconds)
+
+STEP 2: Open Your Project
+--------------------------
+📁 You'll see Android Studio's welcome screen
+🖱️ Click "Open an existing Android Studio project"
+   (it's a big button on the left side)
+
+📂 A file browser will open
+🖱️ Navigate to: This PC → Local Disk (C:) → Users → Dell → EZY_Booking
+🖱️ Click on the "EZY_Booking" folder (it should show as an Android project)
+🖱️ Click "OK" button
+
+⏳ WAIT: Android Studio will sync the project (2-5 minutes)
+   - You'll see "Gradle sync" progress at the bottom
+   - Don't click anything until it says "Gradle sync finished"
+
+STEP 3: Build Your APK
+----------------------
+🖱️ At the top menu, click "Build"
+🖱️ In the dropdown, click "Generate Signed Bundle / APK..."
+
+📱 A dialog will open asking "Android App Bundle or APK?"
+🖱️ Click on "APK" (not Bundle)
+🖱️ Click "Next"
+
+🔑 Another dialog opens about signing
+   - It should already show the keystore I created
+   - If fields are empty, don't worry - just click "Next"
+
+⚙️ Choose build variant:
+🖱️ Select "release" (not debug)
+🖱️ Click "Finish"
+
+⏳ Wait for build (2-3 minutes)
+   - You'll see progress at the bottom
+   - When done, it will show "APK(s) generated successfully"
+
+STEP 4: Find Your APK
+---------------------
+🎉 A notification will appear saying build is complete
+🖱️ Click "locate" or "Show in Explorer" in the notification
+
+📱 Your APK will be at:
+   app → build → outputs → apk → release → app-release.apk
+
+STEP 5: Install on Phone
+------------------------
+📲 Copy app-release.apk to your Android phone
+📱 On phone: tap the APK file to install
+✅ Allow "Install from unknown sources" if asked
+✅ Grant all permissions when the app asks
+
+========================================
+   IF YOU GET STUCK - ALTERNATIVE
+========================================
+
+If Android Studio seems confusing:
+
+🖱️ Double-click "FIX_ANDROID_STUDIO_BUILD.bat"
+   - It will try to fix the Java path automatically
+   - Then run "ONE_CLICK_BUILD.bat" again
+
+========================================
+   WHAT TO EXPECT
+========================================
+
+After installation, your new app will:
+✅ Show a persistent notification "OTP Forwarding Active"
+✅ Stay running in background permanently
+✅ Queue OTP messages when offline
+✅ Auto-send when internet returns
+✅ Work on Android 5 through Android 14
+
+Need help? Tell me exactly where you get stuck!
